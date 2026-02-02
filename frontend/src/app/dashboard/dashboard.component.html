@@ -1,0 +1,82 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h1 class="display-5 fw-bold text-primary mb-3">Dashboard Financeiro</h1>
+      <p class="lead text-muted">Bem-vindo ao sistema de gerenciamento financeiro pessoal</p>
+    </div>
+  </div>
+  
+  <!-- Dashboard Grid -->
+  <div class="row g-4">
+    <div class="col-lg-4 col-md-6">
+      <p-card class="dashboard-card h-100">
+        <p class="card-description text-muted mb-3 text-center">
+          Gerencie os usuários do sistema
+        </p>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="navigateToUsers()">
+            <i class="pi pi-users"></i>
+            Gerenciar Usuários
+          </button>
+        </div>
+      </p-card>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <p-card class="dashboard-card h-100">
+        <p class="card-description text-muted mb-3 text-center">
+          Cadastre e gerencie suas contas bancárias
+        </p>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="navigateToAccounts()">
+            <i class="pi pi-wallet"></i>
+            Gerenciar Contas
+          </button>
+        </div>
+      </p-card>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <p-card class="dashboard-card h-100">
+        <p class="card-description text-muted mb-3 text-center">
+          Defina os tipos de transações (créditos e débitos)
+        </p>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="navigateToTransactionTypes()">
+            <i class="pi pi-list"></i>
+            Gerenciar Tipos
+          </button>
+        </div>
+      </p-card>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <p-card class="dashboard-card h-100">
+        <p class="card-description text-muted mb-3 text-center">
+          Visualize e gerencie as movimentações financeiras
+        </p>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="navigateToFinancialTransactions()">
+            <i class="pi pi-money-bill"></i>
+            Gerenciar Movimentações
+          </button>
+        </div>
+      </p-card>
+    </div>
+    
+    <div class="col-lg-4 col-md-6">
+      <p-card class="dashboard-card h-100">
+        <p class="card-description text-muted mb-3 text-center">
+          Importe movimentações mensais automaticamente
+        </p>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="navigateToMonthlyImport()">
+            <i class="pi pi-upload"></i>
+            Importar Mensal
+          </button>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>

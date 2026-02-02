@@ -1,0 +1,140 @@
+.select-account-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.header h2 {
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.header p {
+  color: #666;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.account-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.account-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.new-account-card:hover {
+  border-color: #28a745;
+}
+
+.account-content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.account-content.new-account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}
+
+.account-header {
+  margin-bottom: 1rem;
+}
+
+.account-header h3 {
+  margin: 0.5rem 0 0 0;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.account-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.balance-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.balance-value {
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.account-description {
+  color: #666;
+  font-size: 1rem;
+}
+
+.new-account-form {
+  padding: 1rem 0;
+}
+
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+:host ::ng-deep .p-card {
+  height: 100%;
+}
+
+:host ::ng-deep .p-card-content {
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .select-account-container {
+    padding: 1rem;
+  }
+  
+  .accounts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .header h2 {
+    font-size: 1.5rem;
+  }
+}

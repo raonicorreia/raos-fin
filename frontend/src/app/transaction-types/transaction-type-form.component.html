@@ -1,0 +1,210 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">{{ title }}</h5>
+          <button class="btn btn-primary" (click)="cancel()">
+            <i class="pi pi-arrow-left"></i>
+            Voltar
+          </button>
+        </div>
+        
+        <div class="card-body">
+          <form (ngSubmit)="save()" *ngIf="!loading; else loadingTemplate">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome do Tipo de Transação:</label>
+                  <input 
+                    id="name" 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="transactionType.name" 
+                    name="name" 
+                    maxlength="100"
+                    required
+                    placeholder="Digite o nome do tipo de transação"
+                  />
+                  <small class="form-text text-muted">
+                    {{ nameCharacterCount }}/100 caracteres
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="value" class="form-label">Valor:</label>
+                  <div class="input-group">
+                    <span class="input-group-text">R$</span>
+                    <input 
+                      id="value" 
+                      type="number" 
+                      class="form-control" 
+                      [(ngModel)]="transactionType.value" 
+                      name="value"
+                      step="0.01"
+                      min="0.01"
+                      max="99999999.99"
+                      placeholder="0,00"
+                      required
+                    />
+                  </div>
+                  <small class="form-text text-muted">
+                    Máximo: 99.999.999,99
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="type" class="form-label">Tipo:</label>
+                  <select 
+                    id="type" 
+                    class="form-control" 
+                    [(ngModel)]="transactionType.type" 
+                    name="type"
+                  >
+                    <option *ngFor="let option of transactionTypeOptions" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                  <small class="form-text text-muted">
+                    Tipo da transação
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="installments" class="form-label">Parcelas:</label>
+                  <input 
+                    id="installments" 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="transactionType.installments" 
+                    name="installments"
+                    min="1"
+                    max="999"
+                    placeholder="1"
+                  />
+                  <small class="form-text text-muted">
+                    Máximo: 999 parcelas
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="dueDate" class="form-label">Dia Vencimento:</label>
+                  <input 
+                    id="dueDate" 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="transactionType.dueDate" 
+                    name="dueDate"
+                    min="1"
+                    max="31"
+                    placeholder="1"
+                  />
+                  <small class="form-text text-muted">
+                    Dia do mês (1-31)
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input 
+                      id="monthlyMovement" 
+                      type="checkbox" 
+                      class="form-check-input" 
+                      [(ngModel)]="transactionType.monthlyMovement" 
+                      name="monthlyMovement"
+                      (change)="onMonthlyMovementChange()"
+                    />
+                    <label for="monthlyMovement" class="form-check-label">
+                      Movimentação Mensal
+                    </label>
+                  </div>
+                  <small class="form-text text-muted">
+                    Se marcado, este tipo de transação será incluído nas movimentações mensais
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input 
+                      id="active" 
+                      type="checkbox" 
+                      class="form-check-input" 
+                      [(ngModel)]="transactionType.active" 
+                      name="active"
+                    />
+                    <label for="active" class="form-check-label">
+                      Tipo de transação ativo
+                    </label>
+                  </div>
+                  <small class="form-text text-muted">
+                    Tipos de transação inativos não aparecem na listagem principal
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <h6 class="alert-heading">
+                    <i class="pi pi-info-circle"></i>
+                    Informações
+                  </h6>
+                  <p class="mb-0">
+                    <strong>Usuário ID:</strong> {{ transactionType.userId }}<br>
+                    <strong>Valor Atual:</strong> {{ valueDisplay }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button" class="btn btn-danger" (click)="cancel()">
+                    <i class="pi pi-times"></i>
+                    Cancelar
+                  </button>
+                  <button type="submit" class="btn btn-success" [disabled]="loading">
+                    <i class="pi pi-check"></i>
+                    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <ng-template #loadingTemplate>
+            <div class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+              </div>
+              <p class="mt-2 text-muted">Carregando dados do tipo de transação...</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-right" />

@@ -1,0 +1,59 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <p-card>
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">Contas</h5>
+          <button class="btn btn-primary" (click)="addNewAccount()">
+            <i class="pi pi-plus"></i>
+            Nova Conta
+          </button>
+        </div>
+
+        <!-- PrimeNG Table -->
+        <div class="m-3">
+          <p-table [value]="accounts" [paginator]="true" [rows]="10" responsiveLayout="scroll" [loading]="loading"
+            [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Saldo</th>
+                <th>Status</th>
+                <th style="width: 120px">Ações</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-account>
+              <tr>
+                <td>{{ account.id }}</td>
+                <td>{{ account.name }}</td>
+                <td>R$ {{ account.balance?.toFixed(2) }}</td>
+                <td>
+                  <span [class]="account.active ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
+                    {{ account.active ? 'Ativa' : 'Inativa' }}
+                  </span>
+                </td>
+                <td>
+                  <div role="group">
+                    <button class="btn btn-warning mb-2"
+                      (click)="editAccount(account)">
+                      <span class="pi pi-pencil"></span>
+                    </button>
+                    <button class="btn btn-danger ms-2 mb-2" (click)="delete(account)">
+                      <span class="pi pi-trash"></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </p-card>
+    </div>
+  </div>
+  
+  <p-toast position="top-right" />
+</div>

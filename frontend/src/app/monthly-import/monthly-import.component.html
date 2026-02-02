@@ -1,0 +1,53 @@
+<div class="monthly-import-container">
+  <p-card header="Importação Mensal de Movimentações">
+    <div class="import-form">
+      <div class="form-group">
+        <label for="user">Usuário:</label>
+        <p-dropdown 
+          [options]="users" 
+          [(ngModel)]="selectedUser" 
+          optionLabel="name" 
+          placeholder="Selecione um usuário"
+          [style]="{'width': '100%'}" />
+      </div>
+      
+      <div class="form-group">
+        <label for="month">Mês:</label>
+        <p-dropdown 
+          [options]="months" 
+          [(ngModel)]="selectedMonth" 
+          placeholder="Selecione um mês"
+          [style]="{'width': '100%'}" />
+      </div>
+      
+      <div class="form-group">
+        <label for="year">Ano:</label>
+        <p-inputNumber 
+          [(ngModel)]="selectedYear" 
+          [min]="2020" 
+          [max]="2030"
+          [style]="{'width': '100%'}" />
+      </div>
+      
+      <div class="form-actions">
+        <button class="btn btn-primary" 
+          (click)="importMonthlyMovements()"
+          [disabled]="!selectedUser || !selectedMonth || loading"> 
+          Importar Movimentações 
+        </button>
+      </div>
+    </div>
+    
+    <div class="info-section">
+      <h3>Informações</h3>
+      <p>A importação mensal criará automaticamente movimentações financeiras para todos os tipos de transação configurados como "Movimentação Mensal".</p>
+      <ul>
+        <li>Serão criadas movimentações com status "Pendente"</li>
+        <li>A data de vencimento será definida conforme o dia configurado no tipo de transação</li>
+        <li>O valor será o mesmo configurado no tipo de transação</li>
+      </ul>
+    </div>
+  </p-card>
+  
+  <p-toast position="top-right" />
+</div>

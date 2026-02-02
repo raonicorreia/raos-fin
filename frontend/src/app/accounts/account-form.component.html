@@ -1,0 +1,112 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">{{ title }}</h5>
+          <button class="btn btn-primary" (click)="cancel()">
+            <i class="pi pi-arrow-left"></i>
+            Voltar
+          </button>
+        </div>
+        
+        <div class="card-body">
+          <form (ngSubmit)="save()" *ngIf="!loading; else loadingTemplate">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome da Conta:</label>
+                  <input 
+                    id="name" 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="account.name" 
+                    name="name" 
+                    maxlength="100"
+                    required
+                    placeholder="Digite o nome da conta"
+                  />
+                  <small class="form-text text-muted">
+                    {{ nameCharacterCount }}/100 caracteres
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="balance" class="form-label">Saldo Inicial:</label>
+                  <div class="input-group">
+                    <span class="input-group-text">R$</span>
+                    <input 
+                      id="balance" 
+                      type="number" 
+                      class="form-control" 
+                      [(ngModel)]="account.balance" 
+                      name="balance"
+                      step="0.01"
+                      min="0"
+                      max="99999999.99"
+                      placeholder="0,00"
+                    />
+                  </div>
+                  <small class="form-text text-muted">
+                    Máximo: 99.999.999,99
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input 
+                      id="active" 
+                      type="checkbox" 
+                      class="form-check-input" 
+                      [(ngModel)]="account.active" 
+                      name="active"
+                    />
+                    <label for="active" class="form-check-label">
+                      Conta ativa
+                    </label>
+                  </div>
+                  <small class="form-text text-muted">
+                    Contas inativas não aparecem na listagem principal
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button" class="btn btn-danger" (click)="cancel()">
+                    <i class="pi pi-times"></i>
+                    Cancelar
+                  </button>
+                  <button type="submit" class="btn btn-success" [disabled]="loading">
+                    <i class="pi pi-check"></i>
+                    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <ng-template #loadingTemplate>
+            <div class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+              </div>
+              <p class="mt-2 text-muted">Carregando dados da conta...</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-right" />

@@ -1,0 +1,63 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <p-card>
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">Tipos de Transação</h5>
+          <button class="btn btn-primary" (click)="addNewTransactionType()">
+            <i class="pi pi-plus"></i>
+            Novo Tipo
+          </button>
+        </div>
+
+        <!-- PrimeNG Table -->
+        <div class="m-3">
+          <p-table [value]="transactionTypes" [paginator]="true" [rows]="10" responsiveLayout="scroll" [loading]="loading"
+            [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Mov. Mensal</th>
+                <th style="width: 120px">Ações</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-transactionType>
+              <tr>
+                <td>{{ transactionType.name }}</td>
+                <td>R$ {{ transactionType.value?.toFixed(2) }}</td>
+                <td>
+                  <span [class]="transactionType.type === 'CREDIT' ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
+                    {{ transactionType.type === 'CREDIT' ? 'Crédito' : 'Débito' }}
+                  </span>
+                </td>
+                <td>
+                  <span [class]="transactionType.monthlyMovement ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
+                    {{ transactionType.monthlyMovement ? 'Sim' : 'Não' }}
+                  </span>
+                </td>
+                <td>
+                  <div role="group">
+                    <button class="btn btn-warning mb-2"
+                      (click)="editTransactionType(transactionType)">
+                      <span class="pi pi-pencil"></span>
+                    </button>
+                    <button class="btn btn-danger ms-2 mb-2" (click)="delete(transactionType)">
+                      <span class="pi pi-trash"></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </p-card>
+    </div>
+  </div>
+  
+  <p-toast position="top-right" />
+</div>

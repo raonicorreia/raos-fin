@@ -1,0 +1,50 @@
+.monthly-import-container {
+  padding: 20px;
+}
+
+.import-form {
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-actions {
+  margin-top: 25px;
+}
+
+.info-section {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.info-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.info-section p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.info-section ul {
+  margin-left: 20px;
+  color: #666;
+}
+
+.info-section li {
+  margin-bottom: 8px;
+}

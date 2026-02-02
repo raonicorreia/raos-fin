@@ -1,0 +1,100 @@
+/* Bootstrap-based layout styles for Financial Transactions Component */
+
+/* PrimeNG Table styling for Bootstrap integration */
+:host ::ng-deep .p-table {
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-table .p-datatable-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .p-table .p-datatable-thead > tr > th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  color: #495057;
+}
+
+:host ::ng-deep .p-table .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+:host ::ng-deep .p-table .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+:host ::ng-deep .p-table .p-datatable-tbody > tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Button group styling */
+.btn-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.btn-group .p-button-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Badge styling for status */
+.badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Dialog content spacing */
+:host ::ng-deep .p-dialog-content {
+  padding: 1.5rem !important;
+}
+
+/* Form styling */
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* Card styling */
+:host ::ng-deep .p-card {
+  border-radius: 0.375rem;
+  border: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .p-card .p-card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  font-weight: 600;
+}
+
+/* Button gap spacing */
+.gap-2 > * {
+  margin-right: 0.5rem;
+}
+
+.gap-2 > *:last-child {
+  margin-right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn-group {
+    flex-direction: column;
+  }
+  
+  :host ::ng-deep .p-table {
+    font-size: 0.875rem;
+  }
+}

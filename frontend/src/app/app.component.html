@@ -1,0 +1,40 @@
+<div class="main-container">
+  <header class="header">
+    <div class="menu-section" *ngIf="currentUser">
+      <div class="left">
+        <img src="./assets/images/simple-logo-text-left.png" style="height: 30px;">
+      </div>
+      <div class="center">
+        <app-menu *ngIf="activeAccount"></app-menu>
+      </div>
+      <div class="right">
+        <div class="user-menu">
+          <div class="dropdown">
+            <button class="btn btn-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="pi pi-user"></i>
+            </button>
+            <ul class="dropdown-menu">
+              @for (item of accountMenuItems; track item.label) {
+                <li><a class="dropdown-item" href="#" (click)="executeCommand(item)">{{ item.label }}</a></li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="account-info" *ngIf="activeAccount">
+      <div class="account-details">
+        <span class="account-label">Conta Ativa:</span>
+        <span class="account-name">{{ activeAccount.name }}</span>
+        <span class="account-label">Saldo:</span>
+        <span class="account-balance">R$ {{ activeAccount.balance | number:'1.2-2' }}</span>
+      </div>
+    </div>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

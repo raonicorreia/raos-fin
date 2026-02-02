@@ -1,0 +1,143 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">{{ title }}</h5>
+          <button class="btn btn-primary" (click)="cancel()">
+            <i class="pi pi-arrow-left"></i>
+            Voltar
+          </button>
+        </div>
+        
+        <div class="card-body">
+          <form (ngSubmit)="save()" *ngIf="!loading; else loadingTemplate">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="value" class="form-label">Valor:</label>
+                  <div class="input-group">
+                    <span class="input-group-text">R$</span>
+                    <input 
+                      id="value" 
+                      type="number" 
+                      class="form-control" 
+                      [(ngModel)]="transaction.value" 
+                      name="value"
+                      step="0.01"
+                      min="0.01"
+                      max="99999999.99"
+                      placeholder="0,00"
+                      required
+                    />
+                  </div>
+                  <small class="form-text text-muted">
+                    Máximo: 99.999.999,99
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="dueDate" class="form-label">Data de Vencimento:</label>
+                  <input 
+                    id="dueDate" 
+                    type="date" 
+                    class="form-control" 
+                    [(ngModel)]="transaction.dueDate" 
+                    name="dueDate"
+                    required
+                  />
+                  <small class="form-text text-muted">
+                    Format: DD/MM/AAAA
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="status" class="form-label">Status:</label>
+                  <select 
+                    id="status" 
+                    class="form-control" 
+                    [(ngModel)]="transaction.status" 
+                    name="status"
+                  >
+                    <option *ngFor="let option of statusOptions" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                  <small class="form-text text-muted">
+                    Status atual da movimentação
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="transactionTypeId" class="form-label">Tipo de Transação:</label>
+                  <input 
+                    id="transactionTypeId" 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="transaction.transactionTypeId" 
+                    name="transactionTypeId"
+                    min="1"
+                    placeholder="ID do tipo"
+                  />
+                  <small class="form-text text-muted">
+                    ID do tipo de transação
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <h6 class="alert-heading">
+                    <i class="pi pi-info-circle"></i>
+                    Informações da Conta
+                  </h6>
+                  <p class="mb-0">
+                    <strong>Conta ID:</strong> {{ transaction.accountId }}<br>
+                    <strong>Usuário ID:</strong> {{ transaction.userId }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button" class="btn btn-danger" (click)="cancel()">
+                    <i class="pi pi-times"></i>
+                    Cancelar
+                  </button>
+                  <button type="submit" class="btn btn-success" [disabled]="loading">
+                    <i class="pi pi-check"></i>
+                    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <ng-template #loadingTemplate>
+            <div class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+              </div>
+              <p class="mt-2 text-muted">Carregando dados da movimentação...</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-right" />

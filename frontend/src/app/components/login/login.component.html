@@ -1,0 +1,120 @@
+<div class="text-center">
+  <form class="form-signin" (ngSubmit)="login()">
+    <img src="/assets/images/simple-logo-text-botton.png" style="height: 180px;">
+    <p class="mb-4 text-muted">Faça login para acessar o sistema</p>
+    <div class="form-label-group">
+      <input pInputText type="email" 
+             id="inputEmail" 
+             class="form-control" 
+             [(ngModel)]="email" 
+             name="email"
+             placeholder="Email address" 
+             required 
+             autofocus>
+      <label for="inputEmail">Endereço de email</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" 
+             id="inputPassword" 
+             class="form-control" 
+             [(ngModel)]="password"
+             name="password"
+             placeholder="Password" 
+             required>
+      <label for="inputPassword">Senha</label>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" 
+            type="submit" 
+            [disabled]="loading">
+      <span *ngIf="!loading">Entrar</span>
+      <span *ngIf="loading">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Entrando...
+      </span>
+    </button>
+
+    <button class="btn btn-lg btn-outline-secondary btn-block mt-2" 
+            type="button" 
+            (click)="showDialogToAdd()">
+      Nova Conta
+    </button>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2026 Gerenciador Financeiro</p>
+  </form>
+</div>
+
+<!-- Modal para Novo Usuário -->
+<div class="modal fade" 
+     [class.show]="displayDialog" 
+     [style.display]="displayDialog ? 'block' : 'none'" 
+     [class]="displayDialog ? '' : 'd-none'"
+     tabindex="-1" 
+     role="dialog" 
+     aria-labelledby="userModalLabel" 
+     aria-hidden="!displayDialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title" id="userModalLabel">Novo Usuário</h5>
+        <button type="button" class="close" (click)="cancel()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="userName">Nome:</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="userName" 
+                   [(ngModel)]="newUser.name" 
+                   name="name"
+                   maxlength="100" 
+                   required>
+            <small class="form-text text-muted">{{ newUser.name.length || 0 }}/100 caracteres</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <input type="email" 
+                   class="form-control" 
+                   id="userEmail" 
+                   [(ngModel)]="newUser.email" 
+                   name="email"
+                   maxlength="100" 
+                   required>
+            <small class="form-text text-muted">{{ newUser.email.length || 0 }}/100 caracteres</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="userPassword">Senha:</label>
+            <input type="password" 
+                   class="form-control" 
+                   id="userPassword" 
+                   [(ngModel)]="newUser.password" 
+                   name="password"
+                   maxlength="255" 
+                   required>
+            <small class="form-text text-muted">Mínimo 6 caracteres</small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+      </div>
+    </div>
+  </div>
+  <p-toast position="top-right" />
+  
+</div>
+
+<div class="modal-backdrop fade" 
+     [class.show]="displayDialog" 
+     *ngIf="displayDialog"></div>

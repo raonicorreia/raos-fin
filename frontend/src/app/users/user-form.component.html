@@ -1,0 +1,144 @@
+<div class="container-fluid py-4">
+  <!-- Header Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mb-0 text-muted">{{ title }}</h5>
+          <button class="btn btn-primary" (click)="cancel()">
+            <i class="pi pi-arrow-left"></i>
+            Voltar
+          </button>
+        </div>
+        
+        <div class="card-body">
+          <form (ngSubmit)="save()" *ngIf="!loading; else loadingTemplate">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nome do Usuário:</label>
+                  <input 
+                    id="name" 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="user.name" 
+                    name="name" 
+                    maxlength="100"
+                    required
+                    placeholder="Digite o nome do usuário"
+                  />
+                  <small class="form-text text-muted">
+                    {{ nameCharacterCount }}/100 caracteres
+                  </small>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email:</label>
+                  <input 
+                    id="email" 
+                    type="email" 
+                    class="form-control" 
+                    [(ngModel)]="user.email" 
+                    name="email" 
+                    maxlength="100"
+                    required
+                    placeholder="Digite o email do usuário"
+                  />
+                  <small class="form-text text-muted">
+                    {{ emailCharacterCount }}/100 caracteres
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!isEditMode">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="password" class="form-label">Senha:</label>
+                  <input 
+                    id="password" 
+                    type="password" 
+                    class="form-control" 
+                    [(ngModel)]="user.password" 
+                    name="password"
+                    minlength="6"
+                    required
+                    placeholder="Digite a senha"
+                  />
+                  <small class="form-text text-muted">
+                    Mínimo 6 caracteres ({{ passwordCharacterCount }} digitados)
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input 
+                      id="active" 
+                      type="checkbox" 
+                      class="form-check-input" 
+                      [(ngModel)]="user.active" 
+                      name="active"
+                    />
+                    <label for="active" class="form-check-label">
+                      Usuário ativo
+                    </label>
+                  </div>
+                  <small class="form-text text-muted">
+                    Usuários inativos não podem fazer login no sistema
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <h6 class="alert-heading">
+                    <i class="pi pi-info-circle"></i>
+                    Informações
+                  </h6>
+                  <p class="mb-0">
+                    <strong>Modo:</strong> {{ isEditMode ? 'Edição' : 'Criação' }}<br>
+                    <strong>Status:</strong> {{ user.active ? 'Ativo' : 'Inativo' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button" class="btn btn-danger" (click)="cancel()">
+                    <i class="pi pi-times"></i>
+                    Cancelar
+                  </button>
+                  <button type="submit" class="btn btn-success" [disabled]="loading">
+                    <i class="pi pi-check"></i>
+                    {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <ng-template #loadingTemplate>
+            <div class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+              </div>
+              <p class="mt-2 text-muted">Carregando dados do usuário...</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-right" />

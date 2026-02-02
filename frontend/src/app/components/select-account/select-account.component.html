@@ -1,0 +1,41 @@
+<div class="select-account-container">
+  <div class="header">
+    <h2>Selecionar Conta</h2>
+    <p>Escolha uma conta para começar a gerenciar suas finanças</p>
+
+  </div>
+
+  <div class="accounts-grid">
+    <p-card 
+      *ngFor="let account of accounts" 
+      class="account-card"
+      (click)="selectAccount(account)"
+      [style.cursor]="'pointer'"
+    >
+      <div class="account-content">
+        <div class="account-header">
+          <i class="pi pi-wallet" style="font-size: 2rem; color: #667eea;"></i>
+          <h3>{{ account.name }}</h3>
+        </div>
+        <div class="account-balance">
+          <span class="balance-label">Saldo:</span>
+          <span class="balance-value">R$ {{ account.balance | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="account-card new-account-card" (click)="createNewAccount()">
+      <div class="account-content new-account">
+        <div class="account-header">
+          <i class="pi pi-plus-circle" style="font-size: 2rem; color: #28a745;"></i>
+          <h3>Nova Conta</h3>
+        </div>
+        <div class="account-description">
+          <span>Criar uma nova conta</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <p-toast />
+</div>
