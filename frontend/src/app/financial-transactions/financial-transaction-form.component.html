@@ -79,17 +79,32 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="transactionTypeId" class="form-label">Tipo de Transação:</label>
-                  <input 
+                  <p-dropdown 
                     id="transactionTypeId" 
-                    type="number" 
-                    class="form-control" 
+                    [options]="transactionTypes"
                     [(ngModel)]="transaction.transactionTypeId" 
                     name="transactionTypeId"
-                    min="1"
-                    placeholder="ID do tipo"
-                  />
+                    optionLabel="name"
+                    optionValue="id"
+                    [filter]="true"
+                    filterPlaceholder="Pesquisar tipo..."
+                    placeholder="Selecione um tipo"
+                    [loading]="loadingTransactionTypes"
+                    [showClear]="false"
+                    required
+                    styleClass="form-control"
+                    inputStyleClass="form-control"
+                    panelStyleClass="bootstrap-dropdown"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <div class="flex align-items-center">
+                        <div>{{ option.name }}</div>
+                        <small class="ml-2 text-muted">({{ option.type === 'CREDIT' ? 'Crédito' : 'Débito' }})</small>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
                   <small class="form-text text-muted">
-                    ID do tipo de transação
+                    Selecione o tipo de transação desejado
                   </small>
                 </div>
               </div>
@@ -139,5 +154,3 @@
     </div>
   </div>
 </div>
-
-<p-toast position="top-right" />

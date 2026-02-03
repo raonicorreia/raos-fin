@@ -11,11 +11,12 @@ import { AccountService } from './services/account.service';
 import { Account } from './models/account.model';
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuItem } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, MenubarModule, ButtonModule, AvatarModule, TieredMenuModule, MenuComponent],
+  imports: [RouterOutlet, CommonModule, MenubarModule, ButtonModule, AvatarModule, TieredMenuModule, MenuComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

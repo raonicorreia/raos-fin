@@ -6,19 +6,16 @@ import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule,
-    ToastModule
+    CommonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  providers: [MessageService]
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   email: string = '';

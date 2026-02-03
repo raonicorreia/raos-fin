@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { MessageModule } from 'primeng/message';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AccountService } from '../../services/account.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,10 +14,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     CardModule,
     MessageModule,
-    ToastModule,
     CommonModule
   ],
-  providers: [MessageService],
   templateUrl: './select-account.component.html',
   styleUrl: './select-account.component.css'
 })

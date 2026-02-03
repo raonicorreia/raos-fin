@@ -7,7 +7,6 @@ import { FinancialTransaction } from '../models/financial-transaction.model';
 import { FinancialTransactionService } from '../services/financial-transaction.service';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -16,10 +15,9 @@ type TransactionStatus = 'PENDING' | 'PAID';
 @Component({
   selector: 'app-financial-transactions',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, TableModule, ToastModule],
+  imports: [CommonModule, CardModule, ButtonModule, TableModule],
   templateUrl: './financial-transactions.component.html',
-  styleUrl: './financial-transactions.component.css',
-  providers: [MessageService]
+  styleUrl: './financial-transactions.component.css'
 })
 export class FinancialTransactionsComponent implements OnInit, OnDestroy {
   

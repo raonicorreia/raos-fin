@@ -6,15 +6,13 @@ import { Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, OnDestroy {
   

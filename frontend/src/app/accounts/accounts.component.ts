@@ -6,16 +6,14 @@ import { CommonModule } from '@angular/common';
 import { Account } from '../models/account.model';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounts',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, TableModule, ToastModule],
+  imports: [CommonModule, CardModule, ButtonModule, TableModule],
   templateUrl: './accounts.component.html',
-  styleUrl: './accounts.component.css',
-  providers: [MessageService]
+  styleUrl: './accounts.component.css'
 })
 export class AccountsComponent implements OnInit {
   

@@ -19,7 +19,7 @@
         </div>
         <div class="account-balance">
           <span class="balance-label">Saldo:</span>
-          <span class="balance-value">R$ {{ account.balance | number:'1.2-2' }}</span>
+          <span class="balance-value">{{ account.balance | currency:'BRL' }}</span>
         </div>
       </div>
     </p-card>
@@ -37,5 +37,4 @@
     </p-card>
   </div>
 
-  <p-toast />
 </div>

@@ -7,15 +7,13 @@ import { TransactionTypeModel, TransactionType } from '../models/transaction-typ
 import { TransactionTypeService } from '../services/transaction-type.service';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-transaction-type-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './transaction-type-form.component.html',
-  styleUrls: ['./transaction-type-form.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./transaction-type-form.component.css']
 })
 export class TransactionTypeFormComponent implements OnInit, OnDestroy {
   
@@ -108,7 +106,7 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy {
       name: '', 
       value: 0, 
       type: 'DEBIT' as TransactionType, 
-      installments: 1, 
+      installments: 0, 
       dueDate: 1, 
       monthlyMovement: false, 
       userId: this.activeAccount?.userId || 1, 

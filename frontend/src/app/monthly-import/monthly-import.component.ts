@@ -4,7 +4,6 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
@@ -16,10 +15,9 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-monthly-import',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardModule, ButtonModule, DropdownModule, InputNumberModule, ToastModule],
+  imports: [CommonModule, FormsModule, CardModule, ButtonModule, DropdownModule, InputNumberModule],
   templateUrl: './monthly-import.component.html',
-  styleUrl: './monthly-import.component.css',
-  providers: [MessageService]
+  styleUrl: './monthly-import.component.css'
 })
 export class MonthlyImportComponent implements OnInit, OnDestroy {
   

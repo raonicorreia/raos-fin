@@ -27,7 +27,7 @@
             <ng-template pTemplate="body" let-transaction>
               <tr>
                 <td>{{ transaction.transactionTypeId }}</td>
-                <td>R$ {{ transaction.value?.toFixed(2) }}</td>
+                <td>{{ transaction.value | currency:'BRL' }}</td>
                 <td>{{ transaction.dueDate }}</td>
                 <td>
                   <span [class]="transaction.status === 'PAID' ? 'badge bg-success' : 'badge bg-warning'" class="px-2 py-1 rounded-pill">
@@ -58,6 +58,4 @@
       </p-card>
     </div>
   </div>
-  
-  <p-toast position="top-right" />
 </div>

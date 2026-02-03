@@ -6,15 +6,13 @@ import { Subscription } from 'rxjs';
 import { Account } from '../models/account.model';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-account-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './account-form.component.html',
-  styleUrls: ['./account-form.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./account-form.component.css']
 })
 export class AccountFormComponent implements OnInit, OnDestroy {
   
@@ -102,12 +100,12 @@ export class AccountFormComponent implements OnInit, OnDestroy {
       const accountId = this.account.id!;
       this.accountService.update(accountId, this.account).subscribe({
         next: () => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Sucesso',
             detail: 'Conta atualizada com sucesso'
           });
-          this.loading = false;
           this.navigateToReturnUrl();
         },
         error: (error) => {

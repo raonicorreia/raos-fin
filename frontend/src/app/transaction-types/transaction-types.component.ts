@@ -7,7 +7,6 @@ import { TransactionTypeModel } from '../models/transaction-type.model';
 import { TransactionTypeService } from '../services/transaction-type.service';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -16,10 +15,9 @@ type TransactionType = 'CREDIT' | 'DEBIT';
 @Component({
   selector: 'app-transaction-types',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, TableModule, ToastModule],
+  imports: [CommonModule, CardModule, ButtonModule, TableModule],
   templateUrl: './transaction-types.component.html',
-  styleUrl: './transaction-types.component.css',
-  providers: [MessageService]
+  styleUrl: './transaction-types.component.css'
 })
 export class TransactionTypesComponent implements OnInit, OnDestroy {
   

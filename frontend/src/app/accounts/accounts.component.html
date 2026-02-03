@@ -28,7 +28,7 @@
               <tr>
                 <td>{{ account.id }}</td>
                 <td>{{ account.name }}</td>
-                <td>R$ {{ account.balance?.toFixed(2) }}</td>
+                <td>{{ account.balance | currency:'BRL' }}</td>
                 <td>
                   <span [class]="account.active ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
                     {{ account.active ? 'Ativa' : 'Inativa' }}
@@ -55,5 +55,4 @@
     </div>
   </div>
   
-  <p-toast position="top-right" />
 </div>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { User } from '../models/user.model';
@@ -12,10 +11,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CardModule, ToastModule],
+  imports: [CommonModule, TableModule, ButtonModule, CardModule],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css',
-  providers: [MessageService]
+  styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
   

@@ -6,16 +6,17 @@ import { Subscription } from 'rxjs';
 import { FinancialTransaction, TransactionStatus } from '../models/financial-transaction.model';
 import { FinancialTransactionService } from '../services/financial-transaction.service';
 import { AccountService } from '../services/account.service';
+import { TransactionTypeService } from '../services/transaction-type.service';
+import { TransactionTypeModel } from '../models/transaction-type.model';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-financial-transaction-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastModule],
+  imports: [CommonModule, FormsModule, DropdownModule],
   templateUrl: './financial-transaction-form.component.html',
-  styleUrls: ['./financial-transaction-form.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./financial-transaction-form.component.css']
 })
 export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
   
@@ -39,15 +40,22 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
     { label: 'Pago', value: 'PAID' as TransactionStatus }
   ];
 
+  transactionTypes: TransactionTypeModel[] = [];
+  loadingTransactionTypes: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private financialTransactionService: FinancialTransactionService,
     private accountService: AccountService,
+    private transactionTypeService: TransactionTypeService,
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    // Carregar tipos de transação
+    this.loadTransactionTypes();
+
     // Carregar conta ativa
     this.accountSub = this.accountService.getActiveAccount().subscribe(account => {
       this.activeAccount = account;
@@ -201,5 +209,24 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
 
   get valueDisplay(): string {
     return this.transaction.value ? `R$ ${this.transaction.value.toFixed(2)}` : 'R$ 0,00';
+  }
+
+  private loadTransactionTypes(): void {
+    this.loadingTransactionTypes = true;
+    this.transactionTypeService.getByUserId(1).subscribe({
+      next: (transactionTypes) => {
+        this.transactionTypes = transactionTypes.filter(tt => tt.active);
+        this.loadingTransactionTypes = false;
+      },
+      error: (error) => {
+        console.error('Error loading transaction types:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao carregar tipos de transação'
+        });
+        this.loadingTransactionTypes = false;
+      }
+    });
   }
 }

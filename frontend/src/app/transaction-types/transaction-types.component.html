@@ -27,7 +27,7 @@
             <ng-template pTemplate="body" let-transactionType>
               <tr>
                 <td>{{ transactionType.name }}</td>
-                <td>R$ {{ transactionType.value?.toFixed(2) }}</td>
+                <td>{{ transactionType.value | currency:'BRL' }}</td>
                 <td>
                   <span [class]="transactionType.type === 'CREDIT' ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
                     {{ transactionType.type === 'CREDIT' ? 'Crédito' : 'Débito' }}
@@ -58,6 +58,4 @@
       </p-card>
     </div>
   </div>
-  
-  <p-toast position="top-right" />
 </div>
