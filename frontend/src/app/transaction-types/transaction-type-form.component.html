@@ -1,4 +1,4 @@
-<div class="container-fluid py-4">
+<div class="container-fluid">
   <!-- Header Card -->
   <div class="row mb-4">
     <div class="col-12">
@@ -25,6 +25,7 @@
                     name="name" 
                     maxlength="100"
                     required
+                    #focusInput
                     placeholder="Digite o nome do tipo de transação"
                   />
                   <small class="form-text text-muted">
@@ -194,7 +195,7 @@
           </form>
 
           <ng-template #loadingTemplate>
-            <div class="text-center py-4">
+            <div class="text-center">
               <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Carregando...</span>
               </div>

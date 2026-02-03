@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -18,7 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
   templateUrl: './financial-transaction-form.component.html',
   styleUrls: ['./financial-transaction-form.component.css']
 })
-export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
+export class FinancialTransactionFormComponent implements OnInit, OnDestroy, AfterViewInit {
   
   transaction: FinancialTransaction = { 
     userId: 1, 
@@ -35,6 +35,7 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
   activeAccount: any = null;
   private routeSub: Subscription | null = null;
   private accountSub: Subscription | null = null;
+  @ViewChild('focusInput') inputElement!: ElementRef;
 
   statusOptions = [
     { label: 'Pendente', value: 'PENDING' as TransactionStatus },
@@ -52,6 +53,10 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
     private transactionTypeService: TransactionTypeService,
     private messageService: MessageService
   ) {}
+  
+  ngAfterViewInit(): void {
+    this.inputElement.nativeElement.focus();
+  }
 
   ngOnInit(): void {
     // Carregar tipos de transação

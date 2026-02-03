@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './transaction-type-form.component.html',
   styleUrls: ['./transaction-type-form.component.css']
 })
-export class TransactionTypeFormComponent implements OnInit, OnDestroy {
+export class TransactionTypeFormComponent implements OnInit, OnDestroy, AfterViewInit {
   
   transactionType: TransactionTypeModel = { 
     name: '', 
@@ -33,6 +33,7 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy {
   activeAccount: any = null;
   private routeSub: Subscription | null = null;
   private accountSub: Subscription | null = null;
+  @ViewChild('focusInput') inputElement!: ElementRef;
 
   transactionTypeOptions = [
     { label: 'Débito', value: 'DEBIT' as TransactionType },
@@ -46,6 +47,10 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private messageService: MessageService
   ) {}
+
+  ngAfterViewInit(): void {
+    this.inputElement.nativeElement.focus();
+  }
 
   ngOnInit(): void {
     // Carregar conta ativa

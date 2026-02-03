@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -14,12 +14,13 @@ import { MessageService } from 'primeng/api';
   templateUrl: './account-form.component.html',
   styleUrls: ['./account-form.component.css']
 })
-export class AccountFormComponent implements OnInit, OnDestroy {
+export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
   
   account: Account = { name: '', balance: 0, userId: 1, active: true };
   isEditMode: boolean = false;
   loading: boolean = false;
   private routeSub: Subscription | null = null;
+  @ViewChild('focusInput') inputElement!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,10 @@ export class AccountFormComponent implements OnInit, OnDestroy {
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.inputElement.nativeElement.focus();
   }
 
   private loadAccount(id: number): void {

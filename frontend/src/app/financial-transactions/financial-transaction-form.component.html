@@ -1,4 +1,4 @@
-<div class="container-fluid py-4">
+<div class="container-fluid">
   <!-- Header Card -->
   <div class="row mb-4">
     <div class="col-12">
@@ -13,6 +13,58 @@
         
         <div class="card-body">
           <form (ngSubmit)="save()" *ngIf="!loading; else loadingTemplate">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="transactionTypeId" class="form-label">Tipo de Transação:</label>
+                  <p-dropdown 
+                    id="transactionTypeId" 
+                    [options]="transactionTypes"
+                    [(ngModel)]="transaction.transactionTypeId" 
+                    name="transactionTypeId"
+                    optionLabel="name"
+                    optionValue="id"
+                    [filter]="true"
+                    filterPlaceholder="Pesquisar tipo..."
+                    placeholder="Selecione um tipo"
+                    [loading]="loadingTransactionTypes"
+                    [showClear]="false"
+                    required
+                    styleClass="form-control"
+                    inputStyleClass="form-control"
+                    panelStyleClass="bootstrap-dropdown"
+                    #focusInput>
+                    <ng-template let-option pTemplate="item">
+                      <div class="flex align-items-center">
+                        <div>{{ option.name }}</div>
+                        <small class="ml-2 text-muted">({{ option.type === 'CREDIT' ? 'Crédito' : 'Débito' }})</small>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                  <small class="form-text text-muted">
+                    Selecione o tipo de transação desejado
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="status" class="form-label">Status:</label>
+                  <select 
+                    id="status" 
+                    class="form-control" 
+                    [(ngModel)]="transaction.status" 
+                    name="status">
+                    <option *ngFor="let option of statusOptions" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                  <small class="form-text text-muted">
+                    Status atual da movimentação
+                  </small>
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-3">
@@ -57,60 +109,6 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="status" class="form-label">Status:</label>
-                  <select 
-                    id="status" 
-                    class="form-control" 
-                    [(ngModel)]="transaction.status" 
-                    name="status"
-                  >
-                    <option *ngFor="let option of statusOptions" [value]="option.value">
-                      {{ option.label }}
-                    </option>
-                  </select>
-                  <small class="form-text text-muted">
-                    Status atual da movimentação
-                  </small>
-                </div>
-              </div>
-              
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="transactionTypeId" class="form-label">Tipo de Transação:</label>
-                  <p-dropdown 
-                    id="transactionTypeId" 
-                    [options]="transactionTypes"
-                    [(ngModel)]="transaction.transactionTypeId" 
-                    name="transactionTypeId"
-                    optionLabel="name"
-                    optionValue="id"
-                    [filter]="true"
-                    filterPlaceholder="Pesquisar tipo..."
-                    placeholder="Selecione um tipo"
-                    [loading]="loadingTransactionTypes"
-                    [showClear]="false"
-                    required
-                    styleClass="form-control"
-                    inputStyleClass="form-control"
-                    panelStyleClass="bootstrap-dropdown"
-                  >
-                    <ng-template let-option pTemplate="item">
-                      <div class="flex align-items-center">
-                        <div>{{ option.name }}</div>
-                        <small class="ml-2 text-muted">({{ option.type === 'CREDIT' ? 'Crédito' : 'Débito' }})</small>
-                      </div>
-                    </ng-template>
-                  </p-dropdown>
-                  <small class="form-text text-muted">
-                    Selecione o tipo de transação desejado
-                  </small>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
               <div class="col-12">
                 <div class="alert alert-info">
                   <h6 class="alert-heading">
@@ -142,7 +140,7 @@
           </form>
 
           <ng-template #loadingTemplate>
-            <div class="text-center py-4">
+            <div class="text-center">
               <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Carregando...</span>
               </div>
