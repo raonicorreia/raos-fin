@@ -12,7 +12,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.raos.invest</groupId>
+    <groupId>com.raos.fin</groupId>
     <artifactId>financial-manager</artifactId>
     <version>1.0.0</version>
     <name>Financial Manager</name>

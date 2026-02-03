@@ -7,7 +7,7 @@ Aplicação full-stack de gerenciamento financeiro pessoal desenvolvida com Java
 Este projeto utiliza uma estrutura de monorepo:
 
 ```
-raos-invest/
+raos-fin/
 ├── backend/          # API REST Java 21 + Spring Boot
 ├── frontend/         # SPA Angular 21 + PrimeNG
 └── README.md         # Documentação do projeto
@@ -41,7 +41,7 @@ A aplicação estará disponível em: http://localhost:4200
 ## Estrutura de Pastas
 
 ### Backend
-- `src/main/java/com/raos/invest/`
+- `src/main/java/com/raos/fin/`
   - `controller/` - Endpoints REST
   - `service/` - Lógica de negócio
   - `repository/` - Acesso a dados
