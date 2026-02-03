@@ -87,14 +87,3 @@
 .gap-2 > *:last-child {
   margin-right: 0;
 }
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .btn-group {
-    flex-direction: column;
-  }
-  
-  :host ::ng-deep .p-table {
-    font-size: 0.875rem;
-  }
-}

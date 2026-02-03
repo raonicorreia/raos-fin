@@ -11,42 +11,76 @@
           </button>
         </div>
 
-        <!-- PrimeNG Table -->
+        <!-- Responsive Table/Card Layout -->
         <div class="m-3">
-          <p-table [value]="accounts" [paginator]="true" [rows]="10" responsiveLayout="scroll" [loading]="loading"
-            [scrollable]="true" scrollHeight="400px">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>Nome</th>
-                <th>Saldo</th>
-                <th>Status</th>
-                <th style="width: 120px">Ações</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-account>
-              <tr>
-                <td>{{ account.name }}</td>
-                <td>{{ account.balance | currency:'BRL' }}</td>
-                <td>
-                  <span [class]="account.active ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
-                    {{ account.active ? 'Ativa' : 'Inativa' }}
-                  </span>
-                </td>
-                <td>
-                  <div role="group">
-                    <button class="btn btn-warning mb-2"
-                      (click)="editAccount(account)">
-                      <span class="pi pi-pencil"></span>
-                    </button>
-                    <button class="btn btn-danger ms-2 mb-2" (click)="delete(account)">
-                      <span class="pi pi-trash"></span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+          <!-- Desktop Table View -->
+          <div class="d-none d-md-block">
+            <p-table [value]="accounts" [paginator]="true" [rows]="10" responsiveLayout="scroll" [loading]="loading"
+              [scrollable]="true" scrollHeight="400px">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Nome</th>
+                  <th>Saldo</th>
+                  <th>Status</th>
+                  <th style="width: 120px">Ações</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-account>
+                <tr>
+                  <td>{{ account.name }}</td>
+                  <td>{{ account.balance | currency:'BRL' }}</td>
+                  <td>
+                    <span [class]="account.active ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
+                      {{ account.active ? 'Ativa' : 'Inativa' }}
+                    </span>
+                  </td>
+                  <td>
+                    <div role="group">
+                      <button class="btn btn-warning mb-2"
+                        (click)="editAccount(account)">
+                        <span class="pi pi-pencil"></span>
+                      </button>
+                      <button class="btn btn-danger ms-2 mb-2" (click)="delete(account)">
+                        <span class="pi pi-trash"></span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
 
+          <!-- Mobile Card View -->
+          <div class="d-md-none">
+            <div class="row" *ngIf="!loading">
+              <div class="col-12 mb-3" *ngFor="let account of accounts">
+                <p-card>
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div class="mobile-content">
+                      <h6 class="mb-1">{{ account.name }}</h6>
+                      <p class="text-muted mb-2 small">{{ account.balance | currency:'BRL' }}</p>
+                      <span [class]="account.active ? 'badge bg-success' : 'badge bg-danger'" class="px-2 py-1 rounded-pill">
+                        {{ account.active ? 'Ativa' : 'Inativa' }}
+                      </span>
+                    </div>
+                    <div class="btn-group-vertical">
+                      <button class="btn btn-warning btn-sm mb-2" (click)="editAccount(account)">
+                        <i class="pi pi-pencil"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm" (click)="delete(account)">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </p-card>
+              </div>
+            </div>
+            
+            <!-- Mobile Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="accounts.length > 0">
+              <span class="text-muted small">Mostrando {{ accounts.length }} contas</span>
+            </div>
+          </div>
         </div>
 
       </p-card>
