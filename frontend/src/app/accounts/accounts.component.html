@@ -17,7 +17,6 @@
             [scrollable]="true" scrollHeight="400px">
             <ng-template pTemplate="header">
               <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Saldo</th>
                 <th>Status</th>
@@ -26,7 +25,6 @@
             </ng-template>
             <ng-template pTemplate="body" let-account>
               <tr>
-                <td>{{ account.id }}</td>
                 <td>{{ account.name }}</td>
                 <td>{{ account.balance | currency:'BRL' }}</td>
                 <td>

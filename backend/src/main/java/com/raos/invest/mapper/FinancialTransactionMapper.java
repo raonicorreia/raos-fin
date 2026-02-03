@@ -28,6 +28,7 @@ public class FinancialTransactionMapper {
             entity.getUser().getId(),
             entity.getAccount().getId(),
             entity.getTransactionType().getId(),
+            entity.getTransactionType().getName(),
             entity.getStatus(),
             entity.getDueDate(),
             entity.getPaymentDate(),

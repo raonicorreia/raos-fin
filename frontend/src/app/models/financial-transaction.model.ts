@@ -5,6 +5,7 @@ export interface FinancialTransaction {
   userId: number;
   accountId: number;
   transactionTypeId: number;
+  transactionTypeName: string;
   status: TransactionStatus;
   dueDate: string;
   paymentDate?: string;

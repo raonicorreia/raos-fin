@@ -24,6 +24,7 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
     userId: 1, 
     accountId: 1, 
     transactionTypeId: 1, 
+    transactionTypeName: '', 
     status: 'PENDING' as TransactionStatus, 
     dueDate: new Date().toISOString().split('T')[0], 
     value: 0 
@@ -115,6 +116,7 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy {
       userId: this.activeAccount?.userId || 1, 
       accountId: this.activeAccount?.id || 1, 
       transactionTypeId: 1, 
+      transactionTypeName: '', 
       status: 'PENDING' as TransactionStatus, 
       dueDate: new Date().toISOString().split('T')[0], 
       value: 0 

@@ -26,7 +26,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-transaction>
               <tr>
-                <td>{{ transaction.transactionTypeId }}</td>
+                <td>{{ transaction.transactionTypeName }}</td>
                 <td>{{ transaction.value | currency:'BRL' }}</td>
                 <td>{{ transaction.dueDate }}</td>
                 <td>
