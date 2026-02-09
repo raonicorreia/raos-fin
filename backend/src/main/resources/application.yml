@@ -3,13 +3,13 @@ server:
 
 spring:
   datasource:
-      dataSourceClassName: com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource
-      url: ${APPSETTING_springDatasourceUrl:jdbc:sqlserver://localhost:1433;user=sa;password=acn@1234;databaseName=Raos_Fin;encrypt=true;trustServerCertificate=true}
+      url: ${APPSETTING_springDatasourceUrl:jdbc:sqlserver://localhost:1433;user=sa;password=raos@1234;databaseName=Raos_Fin;encrypt=true;trustServerCertificate=true}
       maxPoolSize: 200
-      testOnBorrow: true
-      validationQuery: SELECT 1
-      test-while-idle: true
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
   
   h2:
     console:
