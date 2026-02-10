@@ -25,8 +25,12 @@
   </header>
 
   <main class="main-content">
-    <div class="account-info" *ngIf="activeAccount">
-      <div class="account-details">
+    <div class="account-info row center" *ngIf="activeAccount">
+      <div class="user-info">
+        <span class="account-label me-2">Bem vindo:</span>
+        <span class="account-name">{{ currentUser.name }}</span>
+      </div>
+      <div class="account-details center">
         <span class="account-label">Conta Ativa:</span>
         <span class="account-name">{{ activeAccount.name }}</span>
         <span class="account-label">Saldo:</span>

@@ -7,6 +7,7 @@ import { Account } from '../models/account.model';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-accounts',
@@ -19,22 +20,25 @@ export class AccountsComponent implements OnInit {
   
   accounts: Account[] = [];
   loading: boolean = false;
+  currentUser: any;
   
   constructor(
     private accountService: AccountService,
     private messageService: MessageService,
+    private authService: AuthService,
     private router: Router
   ) {
     console.log('AccountsComponent constructor called');
   }
   
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUserSync();
     this.loadAccounts();
   }
   
   loadAccounts() {
     this.loading = true;
-    this.accountService.getByUserId(1).subscribe({ // Usando userId 1 como exemplo
+    this.accountService.getByUserId(this.currentUser.userId).subscribe({
       next: (data) => {
         this.accounts = data;
         this.loading = false;

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Account } from '../models/account.model';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-account-form',
@@ -19,6 +20,7 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
   account: Account = { name: '', balance: 0, userId: 1, active: true };
   isEditMode: boolean = false;
   loading: boolean = false;
+  currentUser: any;
   private routeSub: Subscription | null = null;
   @ViewChild('focusInput') inputElement!: ElementRef;
 
@@ -26,10 +28,13 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
+    private authService: AuthService,
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUserSync();
+
     this.routeSub = this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       
@@ -76,7 +81,7 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetForm(): void {
-    this.account = { name: '', balance: 0, userId: 1, active: true };
+    this.account = { name: '', balance: 0, userId: this.currentUser.userId, active: true };
   }
 
   save(): void {

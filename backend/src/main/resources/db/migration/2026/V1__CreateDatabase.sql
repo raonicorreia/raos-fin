@@ -3,7 +3,7 @@ CREATE TABLE [users] (
 	active bit DEFAULT 1 NOT NULL,
 	name varchar(100) NOT NULL,
 	email varchar(200) NOT NULL,
-	password varchar(50) NOT NULL,
+	password varchar(250) NOT NULL,
   CONSTRAINT [PK_USER] PRIMARY KEY CLUSTERED
   (
   [id] ASC

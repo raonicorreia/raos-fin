@@ -42,7 +42,7 @@ export class LoginComponent {
     this.errorMessage = '';
 
     this.authService.login(this.email, this.password).subscribe({
-      next: () => {
+      next: (token) => {
         this.router.navigate(['/select-account']);
       },
       error: () => {
@@ -67,7 +67,7 @@ export class LoginComponent {
     
     // Create
     console.log('Creating user:', this.newUser);
-    this.userService.create(this.newUser).subscribe({
+    this.authService.register(this.newUser).subscribe({
       next: () => {
         console.log('User created successfully');
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuário criado com sucesso' });

@@ -49,7 +49,7 @@ export class SelectAccountComponent implements OnInit {
   loadAccounts(): void {
     this.loading = true;
 
-    this.accountService.getByUserId(1).subscribe({ // Usando userId 1 como exemplo
+    this.accountService.getByUserId(this.currentUser.userId).subscribe({ // Usando userId 1 como exemplo
       next: (data) => {
         this.accounts = data;
         this.loading = false;
