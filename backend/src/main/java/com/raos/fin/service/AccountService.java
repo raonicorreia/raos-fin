@@ -5,12 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.raos.fin.dto.AccountDTO;
-import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.AccountMapper;
 import com.raos.fin.repository.AccountRepository;
 import com.raos.fin.repository.UserRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;

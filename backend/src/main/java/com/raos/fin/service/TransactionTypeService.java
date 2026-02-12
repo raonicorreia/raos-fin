@@ -4,7 +4,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.dto.TransactionTypeDTO;
 import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.TransactionTypeMapper;
@@ -50,7 +49,7 @@ public class TransactionTypeService {
                 .map(TransactionTypeMapper::toDTO);
     }
     
-    public TransactionTypeDTO save(TransactionTypeDTO dto) {
+    public TransactionTypeDTO save(@NonNull TransactionTypeDTO dto) {
         validateTransactionTypeDTO(dto);
         
         var user = userRepository.findById(Objects.requireNonNull(dto.userId()))
@@ -60,11 +59,11 @@ public class TransactionTypeService {
                 .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + dto.accountId()));
         
         var transactionType = TransactionTypeMapper.toEntity(dto, user, account);
-        var savedTransactionType = transactionTypeRepository.save(transactionType);
+        var savedTransactionType = transactionTypeRepository.save(Objects.requireNonNull(transactionType));
         return TransactionTypeMapper.toDTO(savedTransactionType);
     }
     
-    public Optional<TransactionTypeDTO> update(@NonNull Long id, TransactionTypeDTO dto) {
+    public Optional<TransactionTypeDTO> update(@NonNull Long id, @NonNull TransactionTypeDTO dto) {
         validateTransactionTypeDTO(dto);
         
         return transactionTypeRepository.findById(id)
@@ -73,7 +72,7 @@ public class TransactionTypeService {
                             .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + dto.accountId()));
                     
                     TransactionTypeMapper.updateEntityWithAccount(transactionType, dto, account);
-                    var updatedTransactionType = transactionTypeRepository.save(transactionType);
+                    var updatedTransactionType = transactionTypeRepository.save(Objects.requireNonNull(transactionType));
                     return TransactionTypeMapper.toDTO(updatedTransactionType);
                 });
     }

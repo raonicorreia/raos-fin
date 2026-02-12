@@ -10,6 +10,7 @@ import com.raos.fin.service.TransactionTypeService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/transaction-types")
@@ -59,14 +60,14 @@ public class TransactionTypeController {
     }
     
     @PostMapping
-    public ResponseEntity<TransactionTypeDTO> create(@Valid @RequestBody TransactionTypeDTO transactionTypeDTO) {
-        var createdTransactionType = transactionTypeService.save(transactionTypeDTO);
+    public ResponseEntity<TransactionTypeDTO> create(@Valid @RequestBody(required = true) TransactionTypeDTO transactionTypeDTO) {
+        var createdTransactionType = transactionTypeService.save(Objects.requireNonNull(transactionTypeDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTransactionType);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<TransactionTypeDTO> update(@PathVariable long id, @Valid @RequestBody TransactionTypeDTO transactionTypeDTO) {
-        return transactionTypeService.update(id, transactionTypeDTO)
+    public ResponseEntity<TransactionTypeDTO> update(@PathVariable long id, @Valid @RequestBody(required = true) TransactionTypeDTO transactionTypeDTO) {
+        return transactionTypeService.update(id, Objects.requireNonNull(transactionTypeDTO))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
