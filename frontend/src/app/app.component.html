@@ -34,7 +34,7 @@
         <span class="account-label">Conta Ativa:</span>
         <span class="account-name">{{ activeAccount.name }}</span>
         <span class="account-label">Saldo:</span>
-        <span class="account-balance">{{ activeAccount.balance | currency:'BRL' }}</span>
+        <span class="account-balance">{{ availableAmount() | currency:'BRL' }}</span>
       </div>
     </div>
     <div class="container">

@@ -5,10 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.raos.fin.dto.AccountDTO;
+import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.AccountMapper;
 import com.raos.fin.repository.AccountRepository;
 import com.raos.fin.repository.UserRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,10 +24,13 @@ public class AccountService {
     
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final FinancialTransactionService financialTransactionService;
     
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository) {
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository,
+        FinancialTransactionService financialTransactionService) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.financialTransactionService = financialTransactionService;
     }
     
     public List<AccountDTO> findByUserId(Long userId) {
@@ -73,6 +80,13 @@ public class AccountService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public BigDecimal getAvailableAmount(Long accountId, Long userId) {
+        return accountRepository.findByIdAndActiveTrue(accountId)
+            .map(account -> account.getBalance()
+                .add(financialTransactionService.getAvailableAmount(userId, accountId)))
+            .orElse(BigDecimal.ZERO);
     }
     
     private void validateAccountDTO(AccountDTO dto) {

@@ -8,6 +8,7 @@ import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { AvailableAmountService } from '../services/avaiable-amount.service';
 
 @Component({
   selector: 'app-accounts',
@@ -26,6 +27,7 @@ export class AccountsComponent implements OnInit {
     private accountService: AccountService,
     private messageService: MessageService,
     private authService: AuthService,
+    private availableAmountState: AvailableAmountService,
     private router: Router
   ) {
     console.log('AccountsComponent constructor called');
@@ -70,6 +72,7 @@ export class AccountsComponent implements OnInit {
         console.log('Account deleted successfully');
         this.loadAccounts();
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Conta excluída com sucesso' });
+        this.availableAmountState.getAvailableAmount();
       },
       error: (error) => {
         console.error('Error deleting account:', error);

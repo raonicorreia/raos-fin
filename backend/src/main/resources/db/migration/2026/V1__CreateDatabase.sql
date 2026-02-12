@@ -13,10 +13,11 @@ CREATE TABLE [users] (
 GO
 CREATE TABLE [transaction_types] (
 	id BIGINT IDENTITY(1,1) NOT NULL,
-	active bit DEFAULT 1 NOT NULL,
 	user_id BIGINT NOT NULL,
+	account_id BIGINT NOT NULL,
+	active bit DEFAULT 1 NOT NULL,
 	name varchar(100) NOT NULL,
-	transaction_value decimal NOT NULL,
+	transaction_value numeric(10, 2) NOT NULL,
 	type varchar(50) NOT NULL,
 	installments integer NOT NULL,
 	due_date integer NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE [financial_transactions] (
 	status varchar(20) NOT NULL,
 	due_date date NOT NULL,
 	payment_date date,
-	transaction_value decimal,
+	transaction_value numeric(10, 2),
   CONSTRAINT [PK_FINANCIAL_TRANSACTIONS] PRIMARY KEY CLUSTERED
   (
   [id] ASC
@@ -48,7 +49,7 @@ CREATE TABLE [account] (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	active  bit DEFAULT 1 NOT NULL,
 	name varchar(100) NOT NULL,
-	balance decimal NOT NULL,
+	balance numeric(10, 2) NOT NULL,
 	user_id BIGINT NOT NULL,
   CONSTRAINT [PK_ACCOUNT] PRIMARY KEY CLUSTERED
   (
@@ -63,7 +64,11 @@ ON UPDATE CASCADE
 GO
 ALTER TABLE [transaction_types] CHECK CONSTRAINT [transaction_types_fk0]
 GO
-
+ALTER TABLE [transaction_types] WITH CHECK ADD CONSTRAINT [transaction_types_fk1] FOREIGN KEY ([account_id]) REFERENCES [account]([id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [transaction_types] CHECK CONSTRAINT [transaction_types_fk1]
+GO
 ALTER TABLE [financial_transactions] WITH CHECK ADD CONSTRAINT [financial_transactions_fk0] FOREIGN KEY ([user_id]) REFERENCES [users]([id])
 ON UPDATE CASCADE
 GO

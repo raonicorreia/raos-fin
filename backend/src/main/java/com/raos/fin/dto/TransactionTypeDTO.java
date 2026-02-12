@@ -13,11 +13,12 @@ public record TransactionTypeDTO(
     Integer installments,
     Integer dueDate,
     Boolean monthlyMovement,
-    Long userId
+    Long userId,
+    Long accountId
 ) {
     public TransactionTypeDTO(Long id, Boolean active, String name, BigDecimal value, 
                              TransactionType type, Integer installments, Integer dueDate, 
-                             Boolean monthlyMovement, Long userId) {
+                             Boolean monthlyMovement, Long userId, Long accountId) {
         this.id = id;
         this.active = active;
         this.name = name;
@@ -27,10 +28,11 @@ public record TransactionTypeDTO(
         this.dueDate = dueDate;
         this.monthlyMovement = monthlyMovement;
         this.userId = userId;
+        this.accountId = accountId;
     }
     
     public TransactionTypeDTO(String name, BigDecimal value, TransactionType type, 
-                             Integer installments, Integer dueDate, Boolean monthlyMovement, Long userId) {
-        this(null, true, name, value, type, installments, dueDate, monthlyMovement, userId);
+                             Integer installments, Integer dueDate, Boolean monthlyMovement, Long userId, Long accountId) {
+        this(null, true, name, value, type, installments, dueDate, monthlyMovement, userId, accountId);
     }
 }

@@ -19,8 +19,20 @@ export class TransactionTypeService {
     return this.apiService.getByUserId<TransactionTypeModel>(this.endpoint, userId);
   }
 
+  getByUserIdAndAccountId(userId: number, accountId: number): Observable<TransactionTypeModel[]> {
+    return this.apiService.get<TransactionTypeModel>(`${this.endpoint}/user/${userId}/account/${accountId}`);
+  }
+
   getMonthlyMovementsByUserId(userId: number): Observable<TransactionTypeModel[]> {
     return this.apiService.get<TransactionTypeModel>(`${this.endpoint}/user/${userId}/monthly`);
+  }
+
+  getAvailableAmount(userId: number, accountId: number): Observable<number> {
+    return this.apiService.getOne<number>(`${this.endpoint}/user/${userId}/account/${accountId}/available-amount`);
+  }
+
+  getMonthlyMovementsByUserIdAndAccountId(userId: number, accountId: number): Observable<TransactionTypeModel[]> {
+    return this.apiService.get<TransactionTypeModel>(`${this.endpoint}/user/${userId}/account/${accountId}/monthly`);
   }
 
   getById(id: number): Observable<TransactionTypeModel> {

@@ -4,11 +4,15 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.dto.TransactionTypeDTO;
+import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.TransactionTypeMapper;
 import com.raos.fin.repository.TransactionTypeRepository;
 import com.raos.fin.repository.UserRepository;
+import com.raos.fin.repository.AccountRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,15 +24,23 @@ public class TransactionTypeService {
     
     private final TransactionTypeRepository transactionTypeRepository;
     private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     
     public TransactionTypeService(TransactionTypeRepository transactionTypeRepository, 
-                                UserRepository userRepository) {
+                                UserRepository userRepository, AccountRepository accountRepository) {
         this.transactionTypeRepository = transactionTypeRepository;
         this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
     }
     
     public List<TransactionTypeDTO> findByUserId(Long userId) {
         return transactionTypeRepository.findByUserIdAndActiveTrue(userId).stream()
+                .map(TransactionTypeMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public List<TransactionTypeDTO> findByUserIdAndAccountId(Long userId, Long accountId) {
+        return transactionTypeRepository.findByUserIdAndAccountIdAndActiveTrue(userId, accountId).stream()
                 .map(TransactionTypeMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -44,10 +56,10 @@ public class TransactionTypeService {
         var user = userRepository.findById(Objects.requireNonNull(dto.userId()))
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + dto.userId()));
         
-        var transactionType = TransactionTypeMapper.toEntity(dto, user);
-        if (transactionType == null) {
-            throw new IllegalArgumentException("Tipo de transação não encontrado: " + dto.id());
-        }
+        var account = accountRepository.findById(Objects.requireNonNull(dto.accountId()))
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + dto.accountId()));
+        
+        var transactionType = TransactionTypeMapper.toEntity(dto, user, account);
         var savedTransactionType = transactionTypeRepository.save(transactionType);
         return TransactionTypeMapper.toDTO(savedTransactionType);
     }
@@ -57,10 +69,10 @@ public class TransactionTypeService {
         
         return transactionTypeRepository.findById(id)
                 .map(transactionType -> {
-                    TransactionTypeMapper.updateEntity(transactionType, dto);
-                    if (transactionType == null) {
-                        throw new IllegalArgumentException("Tipo de transação não encontrado: " + dto.id());
-                    }
+                    var account = accountRepository.findById(Objects.requireNonNull(dto.accountId()))
+                            .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + dto.accountId()));
+                    
+                    TransactionTypeMapper.updateEntityWithAccount(transactionType, dto, account);
                     var updatedTransactionType = transactionTypeRepository.save(transactionType);
                     return TransactionTypeMapper.toDTO(updatedTransactionType);
                 });
@@ -83,6 +95,22 @@ public class TransactionTypeService {
                 .collect(Collectors.toList());
     }
     
+    public List<TransactionTypeDTO> findMonthlyMovementsByUserIdAndAccountId(Long userId, Long accountId) {
+        return transactionTypeRepository.findByUserIdAndAccountIdAndMonthlyMovementTrue(userId, accountId)
+                .stream()
+                .map(TransactionTypeMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public BigDecimal getAvailableAmount(Long userId, Long accountId) {
+        return transactionTypeRepository
+                .findByUserIdAndAccountIdAndMonthlyMovementTrue(userId, accountId)
+                .stream()
+                .map(t -> t.getType() == TransactionType.DEBIT ? t.getTransactionValue().negate() : t.getTransactionValue())
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     private void validateTransactionTypeDTO(TransactionTypeDTO dto) {
         if (dto.name() == null || dto.name().trim().isEmpty()) {
             throw new IllegalArgumentException("Nome do tipo de transação é obrigatório");
@@ -101,6 +129,9 @@ public class TransactionTypeService {
         }
         if (dto.userId() == null) {
             throw new IllegalArgumentException("ID do usuário é obrigatório");
+        }
+        if (dto.accountId() == null) {
+            throw new IllegalArgumentException("ID da conta é obrigatório");
         }
     }
 }

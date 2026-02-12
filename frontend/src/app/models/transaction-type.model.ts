@@ -10,4 +10,5 @@ export interface TransactionTypeModel {
   dueDate: number;
   monthlyMovement: boolean;
   userId: number;
+  accountId: number;
 }

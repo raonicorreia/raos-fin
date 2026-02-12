@@ -25,6 +25,7 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy, AfterVie
     dueDate: 1, 
     monthlyMovement: false, 
     userId: 1, 
+    accountId: 1,
     active: true 
   };
   
@@ -58,6 +59,7 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy, AfterVie
       this.activeAccount = account;
       if (account) {
         this.transactionType.userId = account.userId || 1;
+        this.transactionType.accountId = account.id || 1;
       }
     });
 
@@ -115,6 +117,7 @@ export class TransactionTypeFormComponent implements OnInit, OnDestroy, AfterVie
       dueDate: 1, 
       monthlyMovement: false, 
       userId: this.activeAccount?.userId || 1, 
+      accountId: this.activeAccount?.id || 1,
       active: true 
     };
   }

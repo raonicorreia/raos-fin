@@ -22,6 +22,10 @@ public class TransactionTypeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+    
     @Column(nullable = false, length = 100)
     private String name;
     
@@ -47,9 +51,10 @@ public class TransactionTypeEntity {
     // Constructors
     public TransactionTypeEntity() {}
     
-    public TransactionTypeEntity(Users user, String name, BigDecimal transactionValue, TransactionType type, 
+    public TransactionTypeEntity(Users user, Account account, String name, BigDecimal transactionValue, TransactionType type, 
                                 Integer installments, Integer dueDate, Boolean monthlyMovement) {
         this.user = user;
+        this.account = account;
         this.name = name;
         this.transactionValue = transactionValue;
         this.type = type;
@@ -67,6 +72,9 @@ public class TransactionTypeEntity {
     
     public Users getUser() { return user; }
     public void setUser(Users user) { this.user = user; }
+    
+    public Account getAccount() { return account; }
+    public void setAccount(Account account) { this.account = account; }
     
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

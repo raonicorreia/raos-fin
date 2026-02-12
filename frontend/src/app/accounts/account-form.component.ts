@@ -7,6 +7,7 @@ import { Account } from '../models/account.model';
 import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../services/auth.service';
+import { AvailableAmountService } from '../services/avaiable-amount.service';
 
 @Component({
   selector: 'app-account-form',
@@ -29,6 +30,7 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private accountService: AccountService,
     private authService: AuthService,
+    private availableAmountState: AvailableAmountService,
     private messageService: MessageService
   ) {}
 
@@ -111,6 +113,7 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
       this.accountService.update(accountId, this.account).subscribe({
         next: () => {
           this.loading = false;
+          this.availableAmountState.getAvailableAmount();
           this.messageService.add({
             severity: 'success',
             summary: 'Sucesso',
@@ -132,6 +135,7 @@ export class AccountFormComponent implements OnInit, OnDestroy, AfterViewInit {
       // Criar nova conta
       this.accountService.create(this.account).subscribe({
         next: () => {
+          this.availableAmountState.getAvailableAmount();
           this.messageService.add({
             severity: 'success',
             summary: 'Sucesso',

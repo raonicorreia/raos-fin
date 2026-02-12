@@ -27,6 +27,10 @@ export class AccountService {
     return this.apiService.getById<Account>(this.endpoint, id);
   }
 
+  getAvailableAmount(id: number, userId: number): Observable<number> {
+    return this.apiService.getOne<number>(`${this.endpoint}/${id}/user/${userId}/available-amount`);
+  }
+
   create(account: Account): Observable<Account> {
     return this.apiService.post<Account>(this.endpoint, account);
   }

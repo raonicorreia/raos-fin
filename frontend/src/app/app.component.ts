@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
@@ -12,6 +12,7 @@ import { Account } from './models/account.model';
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { AvailableAmountService } from './services/avaiable-amount.service';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,12 @@ export class AppComponent implements OnInit {
 
   private accountSubscription: Subscription | null = null;
   private authSubscription: Subscription | null = null;
+  private availableAmountState = inject(AvailableAmountService);
   activeAccount: Account | null = null;
   currentUser: any = null;
   accountMenuItems: MenuItem[] = [];
   showAccountMenu: boolean = false;
+  availableAmount = this.availableAmountState.valor;
 
   constructor(
     private accountService: AccountService,
@@ -44,6 +47,8 @@ export class AppComponent implements OnInit {
     this.authSubscription = this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
     });
+
+    this.availableAmountState.getAvailableAmount();
   }
 
   ngOnDestroy(): void {
@@ -84,7 +89,6 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  
   logout(): void {
     this.authService.logout();
     this.accountService.clearActiveAccount();

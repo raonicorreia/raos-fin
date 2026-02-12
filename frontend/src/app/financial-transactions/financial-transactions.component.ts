@@ -9,6 +9,7 @@ import { AccountService } from '../services/account.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AvailableAmountService } from '../services/avaiable-amount.service';
 
 type TransactionStatus = 'PENDING' | 'PAID';
 
@@ -35,6 +36,7 @@ export class FinancialTransactionsComponent implements OnInit, OnDestroy {
     private financialTransactionService: FinancialTransactionService,
     private accountService: AccountService,
     private messageService: MessageService,
+    private availableAmountState: AvailableAmountService,
     private router: Router
   ) {
     console.log('FinancialTransactionsComponent constructor called');
@@ -91,6 +93,7 @@ export class FinancialTransactionsComponent implements OnInit, OnDestroy {
         console.log('Transaction marked as paid successfully');
         this.loadTransactions();
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Movimentação marcada como paga' });
+        this.availableAmountState.getAvailableAmount();
       },
       error: (error) => {
         console.error('Error marking transaction as paid:', error);
@@ -106,6 +109,7 @@ export class FinancialTransactionsComponent implements OnInit, OnDestroy {
         console.log('Transaction deleted successfully');
         this.loadTransactions();
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Movimentação excluída com sucesso' });
+        this.availableAmountState.getAvailableAmount();
       },
       error: (error) => {
         console.error('Error deleting transaction:', error);

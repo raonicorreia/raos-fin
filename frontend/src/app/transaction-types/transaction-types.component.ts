@@ -24,6 +24,7 @@ export class TransactionTypesComponent implements OnInit, OnDestroy {
   transactionTypes: TransactionTypeModel[] = [];
   loading: boolean = false;
   activeAccount: any = null;
+  availableAmount: number = 0;
   private accountSubscription: Subscription | null = null;
   
   transactionTypeOptions = [
@@ -55,8 +56,8 @@ export class TransactionTypesComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    // Mock: filtrando por conta ativa - substituir com chamada real à API
-    this.transactionTypeService.getByUserId(this.activeAccount.userId || 1).subscribe({
+    // Usando o novo endpoint que filtra por userId e accountId
+    this.transactionTypeService.getByUserIdAndAccountId(this.activeAccount.userId || 1, this.activeAccount.id).subscribe({
       next: (data) => {
         this.transactionTypes = data;
         this.loading = false;
@@ -69,6 +70,24 @@ export class TransactionTypesComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         console.error('Error loading transaction types:', error);
+      }
+    });
+
+    this.getAvailableAmount();
+  }
+  
+  getAvailableAmount() {
+    if (!this.activeAccount) {
+      return;
+    }
+    
+    this.transactionTypeService.getAvailableAmount(this.activeAccount.userId || 1, this.activeAccount.id).subscribe({
+      next: (data) => {
+        this.availableAmount = data;
+        console.log('Available amount:', data);
+      },
+      error: (error) => {
+        console.error('Error loading available amount:', error);
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -10,6 +10,7 @@ import { TransactionTypeService } from '../services/transaction-type.service';
 import { TransactionTypeModel } from '../models/transaction-type.model';
 import { MessageService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
+import { AvailableAmountService } from '../services/avaiable-amount.service';
 
 @Component({
   selector: 'app-financial-transaction-form',
@@ -35,6 +36,8 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy, Aft
   activeAccount: any = null;
   private routeSub: Subscription | null = null;
   private accountSub: Subscription | null = null;
+  private availableAmountState = inject(AvailableAmountService);
+
   @ViewChild('focusInput') inputElement!: ElementRef;
 
   statusOptions = [
@@ -170,6 +173,7 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy, Aft
           });
           this.loading = false;
           this.router.navigate(['/financial-transactions']);
+          this.availableAmountState.getAvailableAmount();
         },
         error: (error) => {
           this.messageService.add({
@@ -192,6 +196,7 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy, Aft
           });
           this.loading = false;
           this.router.navigate(['/financial-transactions']);
+          this.availableAmountState.getAvailableAmount();
         },
         error: (error) => {
           this.messageService.add({

@@ -22,4 +22,6 @@ public interface FinancialTransactionRepository extends JpaRepository<FinancialT
                                                         @Param("endDate") LocalDate endDate);
     
     List<FinancialTransaction> findByUserIdAndStatus(Long userId, String status);
+
+    List<FinancialTransaction> findByUserIdAndAccountId(Long userId, Long accountId);
 }

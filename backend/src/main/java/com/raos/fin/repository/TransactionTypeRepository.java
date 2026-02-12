@@ -11,4 +11,6 @@ import java.util.List;
 public interface TransactionTypeRepository extends JpaRepository<TransactionTypeEntity, Long> {
     List<TransactionTypeEntity> findByUserIdAndActiveTrue(Long userId);
     List<TransactionTypeEntity> findByUserIdAndMonthlyMovementTrue(Long userId);
+    List<TransactionTypeEntity> findByUserIdAndAccountIdAndActiveTrue(Long userId, Long accountId);
+    List<TransactionTypeEntity> findByUserIdAndAccountIdAndMonthlyMovementTrue(Long userId, Long accountId);
 }

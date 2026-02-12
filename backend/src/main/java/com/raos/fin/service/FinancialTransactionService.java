@@ -8,12 +8,14 @@ import com.raos.fin.domain.model.Account;
 import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.domain.model.Users;
 import com.raos.fin.dto.FinancialTransactionDTO;
+import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.FinancialTransactionMapper;
 import com.raos.fin.repository.AccountRepository;
 import com.raos.fin.repository.FinancialTransactionRepository;
 import com.raos.fin.repository.TransactionTypeRepository;
 import com.raos.fin.repository.UserRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -112,6 +114,15 @@ public class FinancialTransactionService {
                     var updatedTransaction = transactionRepository.save(transaction);
                     return FinancialTransactionMapper.toDTO(updatedTransaction);
                 });
+    }
+
+    public BigDecimal getAvailableAmount(Long userId, Long accountId) {
+        return transactionRepository
+                .findByUserIdAndAccountId(userId, accountId)
+                .stream()
+                .map(t -> t.getTransactionType().getType() == TransactionType.DEBIT ? t.getTransactionValue().negate() : t.getTransactionValue())
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
     private void validateFinancialTransactionDTO(FinancialTransactionDTO dto) {

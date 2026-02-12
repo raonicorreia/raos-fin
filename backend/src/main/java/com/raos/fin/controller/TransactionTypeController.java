@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.raos.fin.dto.TransactionTypeDTO;
 import com.raos.fin.service.TransactionTypeService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -26,9 +27,27 @@ public class TransactionTypeController {
         return ResponseEntity.ok(transactionTypes);
     }
     
+    @GetMapping("/user/{userId}/account/{accountId}")
+    public ResponseEntity<List<TransactionTypeDTO>> findByUserIdAndAccountId(@PathVariable Long userId, @PathVariable Long accountId) {
+        var transactionTypes = transactionTypeService.findByUserIdAndAccountId(userId, accountId);
+        return ResponseEntity.ok(transactionTypes);
+    }
+
+    @GetMapping("/user/{userId}/account/{accountId}/available-amount")
+    public ResponseEntity<BigDecimal> getAvailableAmount(@PathVariable Long userId, @PathVariable Long accountId) {
+        var transactionTypes = transactionTypeService.getAvailableAmount(userId, accountId);
+        return ResponseEntity.ok(transactionTypes);
+    }
+    
     @GetMapping("/user/{userId}/monthly")
     public ResponseEntity<List<TransactionTypeDTO>> findMonthlyMovementsByUserId(@PathVariable Long userId) {
         var monthlyMovements = transactionTypeService.findMonthlyMovementsByUserId(userId);
+        return ResponseEntity.ok(monthlyMovements);
+    }
+    
+    @GetMapping("/user/{userId}/account/{accountId}/monthly")
+    public ResponseEntity<List<TransactionTypeDTO>> findMonthlyMovementsByUserIdAndAccountId(@PathVariable Long userId, @PathVariable Long accountId) {
+        var monthlyMovements = transactionTypeService.findMonthlyMovementsByUserIdAndAccountId(userId, accountId);
         return ResponseEntity.ok(monthlyMovements);
     }
     

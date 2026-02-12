@@ -23,6 +23,12 @@ export class ApiService {
     });
   }
 
+  getOne<T>(endpoint: string): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}/${endpoint}`, {
+      headers: this.getHeaders()
+    });
+  }
+
   // Generic GET by ID
   getById<T>(endpoint: string, id: number): Observable<T> {
     return this.http.get<T>(`${this.baseUrl}/${endpoint}/${id}`, {

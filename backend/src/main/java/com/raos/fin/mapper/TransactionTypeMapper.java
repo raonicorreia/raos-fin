@@ -2,11 +2,12 @@ package com.raos.fin.mapper;
 
 import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.domain.model.Users;
+import com.raos.fin.domain.model.Account;
 import com.raos.fin.dto.TransactionTypeDTO;
 
 public class TransactionTypeMapper {
     
-    public static TransactionTypeEntity toEntity(TransactionTypeDTO dto, Users user) {
+    public static TransactionTypeEntity toEntity(TransactionTypeDTO dto, Users user, Account account) {
         var transactionType = new TransactionTypeEntity();
         transactionType.setId(dto.id());
         transactionType.setActive(dto.active());
@@ -17,6 +18,7 @@ public class TransactionTypeMapper {
         transactionType.setDueDate(dto.dueDate());
         transactionType.setMonthlyMovement(dto.monthlyMovement());
         transactionType.setUser(user);
+        transactionType.setAccount(account);
         return transactionType;
     }
     
@@ -30,7 +32,8 @@ public class TransactionTypeMapper {
             entity.getInstallments(),
             entity.getDueDate(),
             entity.getMonthlyMovement(),
-            entity.getUser().getId()
+            entity.getUser().getId(),
+            entity.getAccount().getId()
         );
     }
     
@@ -42,5 +45,10 @@ public class TransactionTypeMapper {
         entity.setInstallments(dto.installments());
         entity.setDueDate(dto.dueDate());
         entity.setMonthlyMovement(dto.monthlyMovement());
+    }
+    
+    public static void updateEntityWithAccount(TransactionTypeEntity entity, TransactionTypeDTO dto, Account account) {
+        updateEntity(entity, dto);
+        entity.setAccount(account);
     }
 }

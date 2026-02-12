@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.raos.fin.dto.AccountDTO;
 import com.raos.fin.service.AccountService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,12 @@ public class AccountController {
         return accountService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/user/{userId}/available-amount")
+    public ResponseEntity<BigDecimal> getAvailableAmount(@PathVariable @NonNull Long id, @PathVariable @NonNull Long userId) {
+        var transactionTypes = accountService.getAvailableAmount(id, userId);
+        return ResponseEntity.ok(transactionTypes);
     }
     
     @PostMapping

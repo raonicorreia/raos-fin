@@ -1,0 +1,17 @@
+{
+  "name": "raos-fin",
+  "version": "1.0.0",
+  "description": "Financial Management System",
+  "scripts": {
+    "start": "node start-project.js",
+    "start:windows": "start-project.bat",
+    "start:linux": "chmod +x start-project.sh && ./start-project.sh",
+    "docker:up": "cd backend && docker-compose up -d",
+    "docker:down": "cd backend && docker-compose down",
+    "backend": "cd backend && mvn spring-boot:run",
+    "frontend": "cd frontend && ng serve"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
