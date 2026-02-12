@@ -4,7 +4,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.raos.fin.domain.model.Account;
+import com.raos.fin.domain.projection.AvailableAmountProjection;
 import com.raos.fin.dto.AccountDTO;
+import com.raos.fin.dto.AvailableAmountDTO;
+import com.raos.fin.enums.TransactionStatus;
+import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.AccountMapper;
 import com.raos.fin.repository.AccountRepository;
 import com.raos.fin.repository.UserRepository;
@@ -79,11 +84,16 @@ public class AccountService {
                 .orElse(false);
     }
 
-    public BigDecimal getAvailableAmount(Long accountId, Long userId) {
-        return accountRepository.findByIdAndActiveTrue(accountId)
-            .map(account -> account.getBalance()
-                .add(financialTransactionService.getAvailableAmount(userId, accountId)))
-            .orElse(BigDecimal.ZERO);
+    public AvailableAmountDTO getAvailableAmount(@NonNull Long accountId, @NonNull Long userId) {
+        AvailableAmountDTO available = this.accountRepository.getAvailableAmount(userId, accountId, TransactionType.DEBIT, TransactionStatus.PAID);
+        Optional<Account> accountOpt = this.accountRepository.findById(accountId);
+        if (accountOpt.isPresent()) {
+            Account account = accountOpt.get();
+            BigDecimal newCurrent = available.current().add(account.getBalance());
+            BigDecimal newEstimated = available.estimated().add(account.getBalance());
+            available = new AvailableAmountDTO(newCurrent, newEstimated);
+        }
+        return available;
     }
     
     private void validateAccountDTO(AccountDTO dto) {

@@ -33,8 +33,10 @@
       <div class="account-details center">
         <span class="account-label">Conta Ativa:</span>
         <span class="account-name">{{ activeAccount.name }}</span>
-        <span class="account-label">Saldo:</span>
-        <span class="account-balance">{{ availableAmount() | currency:'BRL' }}</span>
+        <span class="account-label">Saldo Estimado:</span>
+        <span class="account-balance">{{ availableAmount().current | currency:'BRL' }}</span>
+        <span class="account-label">Saldo Atual:</span>
+        <span class="account-balance text-danger">{{ availableAmount().estimated | currency:'BRL' }}</span>
       </div>
     </div>
     <div class="container">

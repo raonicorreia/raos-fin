@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.raos.fin.domain.model.Account;
 import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.domain.model.Users;
+import com.raos.fin.dto.AvailableAmountDTO;
 import com.raos.fin.dto.FinancialTransactionDTO;
 import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.FinancialTransactionMapper;
@@ -116,13 +117,8 @@ public class FinancialTransactionService {
                 });
     }
 
-    public BigDecimal getAvailableAmount(Long userId, Long accountId) {
-        return transactionRepository
-                .findByUserIdAndAccountId(userId, accountId)
-                .stream()
-                .map(t -> t.getTransactionType().getType() == TransactionType.DEBIT ? t.getTransactionValue().negate() : t.getTransactionValue())
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    public AvailableAmountDTO getAvailableAmount(Long userId, Long accountId) {
+        return new AvailableAmountDTO(BigDecimal.ZERO, BigDecimal.ZERO);
     }
     
     private void validateFinancialTransactionDTO(FinancialTransactionDTO dto) {

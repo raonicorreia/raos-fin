@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import com.raos.fin.domain.projection.AvailableAmountProjection;
 import com.raos.fin.dto.AccountDTO;
+import com.raos.fin.dto.AvailableAmountDTO;
 import com.raos.fin.service.AccountService;
 
 import java.math.BigDecimal;
@@ -36,7 +38,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}/user/{userId}/available-amount")
-    public ResponseEntity<BigDecimal> getAvailableAmount(@PathVariable @NonNull Long id, @PathVariable @NonNull Long userId) {
+    public ResponseEntity<AvailableAmountDTO> getAvailableAmount(@PathVariable @NonNull Long id, @PathVariable @NonNull Long userId) {
         var transactionTypes = accountService.getAvailableAmount(id, userId);
         return ResponseEntity.ok(transactionTypes);
     }

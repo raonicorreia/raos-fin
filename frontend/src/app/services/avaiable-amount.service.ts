@@ -1,13 +1,14 @@
 import { Injectable, signal } from '@angular/core';
 import { AccountService } from './account.service';
 import { Account } from '../models/account.model';
+import { AvailableAmount } from '../models/available-amount.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AvailableAmountService {
 
-    private _valor = signal<number>(0);
+    private _valor = signal<AvailableAmount>({ current: 0, estimated: 0 });
     valor = this._valor.asReadonly();
     activeAccount: Account | null = null;
 

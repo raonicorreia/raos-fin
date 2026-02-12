@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Account } from '../models/account.model';
+import { AvailableAmount } from '../models/available-amount.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,8 @@ export class AccountService {
     return this.apiService.getById<Account>(this.endpoint, id);
   }
 
-  getAvailableAmount(id: number, userId: number): Observable<number> {
-    return this.apiService.getOne<number>(`${this.endpoint}/${id}/user/${userId}/available-amount`);
+  getAvailableAmount(id: number, userId: number): Observable<AvailableAmount> {
+    return this.apiService.getOne<AvailableAmount>(`${this.endpoint}/${id}/user/${userId}/available-amount`);
   }
 
   create(account: Account): Observable<Account> {
