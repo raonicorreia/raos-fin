@@ -33,6 +33,7 @@
                     styleClass="form-control"
                     inputStyleClass="form-control"
                     panelStyleClass="bootstrap-dropdown"
+                    (onChange)="onTransactionTypeSelect($event)"
                     #focusInput>
                     <ng-template let-option pTemplate="item">
                       <div class="flex align-items-center">
@@ -116,8 +117,7 @@
                     Informações da Conta
                   </h6>
                   <p class="mb-0">
-                    <strong>Conta ID:</strong> {{ transaction.accountId }}<br>
-                    <strong>Usuário ID:</strong> {{ transaction.userId }}
+                    <strong>Conta:</strong> {{ activeAccount.name }}<br>
                   </p>
                 </div>
               </div>

@@ -58,7 +58,12 @@ export class FinancialTransactionFormComponent implements OnInit, OnDestroy, Aft
   ) {}
   
   ngAfterViewInit(): void {
-    this.inputElement.nativeElement.focus();
+    // this.inputElement.nativeElement.focus();
+  }
+
+  onTransactionTypeSelect(event: any): void {
+    let transactionType = this.transactionTypes.find(tt => tt.id === event.value);
+    this.transaction.value = transactionType?.value || 0;
   }
 
   ngOnInit(): void {
