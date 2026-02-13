@@ -11,6 +11,8 @@ import { AccountService } from '../services/account.service';
 import { MonthlyImportService, MonthlyImportRequest } from '../services/monthly-import.service';
 import { User } from '../models/user.model';
 import { Subscription } from 'rxjs';
+import { AvailableAmountService } from '../services/avaiable-amount.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-monthly-import',
@@ -22,7 +24,6 @@ import { Subscription } from 'rxjs';
 export class MonthlyImportComponent implements OnInit, OnDestroy {
   
   users: User[] = [];
-  selectedUser: User | null = null;
   selectedMonth: number | null = null;
   selectedYear: number = new Date().getFullYear();
   loading: boolean = false;
@@ -33,7 +34,9 @@ export class MonthlyImportComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private accountService: AccountService,
     private monthlyImportService: MonthlyImportService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private availableAmountState: AvailableAmountService,
+    private router: Router,
   ) {
     this.loadUsers();
   }
@@ -60,8 +63,7 @@ export class MonthlyImportComponent implements OnInit, OnDestroy {
     });
   }
   
-  get months() {
-    return [
+  months = [
       { label: 'Janeiro', value: 1 },
       { label: 'Fevereiro', value: 2 },
       { label: 'Março', value: 3 },
@@ -75,14 +77,8 @@ export class MonthlyImportComponent implements OnInit, OnDestroy {
       { label: 'Novembro', value: 11 },
       { label: 'Dezembro', value: 12 }
     ];
-  }
   
   importMonthlyMovements() {
-    if (!this.selectedUser) {
-      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Selecione um usuário' });
-      return;
-    }
-    
     if (!this.selectedMonth) {
       this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Selecione um mês' });
       return;
@@ -91,8 +87,8 @@ export class MonthlyImportComponent implements OnInit, OnDestroy {
     this.loading = true;
     
     const request: MonthlyImportRequest = {
-      userId: this.activeAccount?.userId || this.selectedUser?.id || 1,
-      accountId: this.activeAccount?.id || 1,
+      userId: this.activeAccount.userId,
+      accountId: this.activeAccount.id,
       month: this.selectedMonth,
       year: this.selectedYear
     };
@@ -105,6 +101,8 @@ export class MonthlyImportComponent implements OnInit, OnDestroy {
           detail: `${transactions.length} movimentações importadas para ${this.months.find(m => m.value === this.selectedMonth)?.label}/${this.selectedYear}` 
         });
         this.loading = false;
+        this.availableAmountState.getAvailableAmount();
+        this.router.navigate(['/financial-transactions']);
       },
       error: (error) => {
         this.messageService.add({ 

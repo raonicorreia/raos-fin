@@ -23,6 +23,7 @@ export class AuthService {
       password: password
     }).pipe(
       map(auth => {
+        localStorage.setItem('access_token', auth.token);
         sessionStorage.setItem(this.USER_KEY, JSON.stringify(auth));
         this.currentUserSubject.next(auth);
         return auth;
@@ -37,6 +38,7 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem(this.USER_KEY);
     this.currentUserSubject.next(null);
+    localStorage.clear();
   }
 
   getCurrentUser(): Observable<AuthResponse | null> {

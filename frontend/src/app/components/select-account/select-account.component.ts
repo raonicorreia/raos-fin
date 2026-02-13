@@ -55,11 +55,20 @@ export class SelectAccountComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.messageService.add({ 
-          severity: 'error', 
-          summary: 'Erro', 
-          detail: 'Erro ao carregar contas' 
-        });
+        if (error.status === 401 || error.status === 403) {
+          this.messageService.add({ 
+            severity: 'error', 
+            summary: 'Erro', 
+            detail: 'Acesso não autorizado' 
+          });
+        } else {
+          this.messageService.add({ 
+            severity: 'error', 
+            summary: 'Erro', 
+            detail: 'Erro ao carregar contas' 
+          });
+        }
+
         this.loading = false;
         console.error('Error loading accounts:', error);
       }

@@ -1,38 +1,50 @@
 <div class="monthly-import-container">
   <p-card header="Importação Mensal de Movimentações">
-    <div class="import-form">
+    <div class="import-form mt-3">
       <div class="form-group">
-        <label for="user">Usuário:</label>
-        <p-dropdown 
-          [options]="users" 
-          [(ngModel)]="selectedUser" 
-          optionLabel="name" 
-          placeholder="Selecione um usuário"
-          [style]="{'width': '100%'}" />
+        <div class="mb-3">
+          <label for="month" class="form-label">Mês:</label>
+          <select 
+            id="month" 
+            class="form-control" 
+            [(ngModel)]="selectedMonth" 
+            name="month">
+            <option *ngFor="let option of months" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <small class="form-text text-muted">
+            Selecione um mês
+          </small>
+        </div>
       </div>
       
       <div class="form-group">
-        <label for="month">Mês:</label>
-        <p-dropdown 
-          [options]="months" 
-          [(ngModel)]="selectedMonth" 
-          placeholder="Selecione um mês"
-          [style]="{'width': '100%'}" />
-      </div>
-      
-      <div class="form-group">
-        <label for="year">Ano:</label>
-        <p-inputNumber 
-          [(ngModel)]="selectedYear" 
-          [min]="2020" 
-          [max]="2030"
-          [style]="{'width': '100%'}" />
+          <label for="year" class="form-label">Ano:</label>
+          <div class="input-group">
+            <span class="input-group-text">A</span>
+            <input 
+              id="year" 
+              type="number" 
+              class="form-control" 
+              [(ngModel)]="selectedYear" 
+              name="value"
+              step="1"
+              min="2000"
+              max="2100"
+              placeholder="2026"
+              required
+            />
+          </div>
+          <small class="form-text text-muted">
+            Máximo: 2100
+          </small>
       </div>
       
       <div class="form-actions">
         <button class="btn btn-primary" 
           (click)="importMonthlyMovements()"
-          [disabled]="!selectedUser || !selectedMonth || loading"> 
+          [disabled]="!selectedMonth || loading"> 
           Importar Movimentações 
         </button>
       </div>
