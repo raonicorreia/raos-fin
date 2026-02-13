@@ -21,6 +21,12 @@ raos-fin/
 - Maven 3.8+
 - Angular CLI 21+
 
+### Docker
+```bash
+cd backend
+docker-compose up
+```
+
 ### Backend
 ```bash
 cd backend
