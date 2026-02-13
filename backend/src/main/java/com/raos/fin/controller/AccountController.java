@@ -6,12 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import com.raos.fin.domain.projection.AvailableAmountProjection;
 import com.raos.fin.dto.AccountDTO;
 import com.raos.fin.dto.AvailableAmountDTO;
 import com.raos.fin.service.AccountService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController

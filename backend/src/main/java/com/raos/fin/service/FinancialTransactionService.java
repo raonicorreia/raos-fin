@@ -9,7 +9,6 @@ import com.raos.fin.domain.model.TransactionTypeEntity;
 import com.raos.fin.domain.model.Users;
 import com.raos.fin.dto.AvailableAmountDTO;
 import com.raos.fin.dto.FinancialTransactionDTO;
-import com.raos.fin.enums.TransactionType;
 import com.raos.fin.mapper.FinancialTransactionMapper;
 import com.raos.fin.repository.AccountRepository;
 import com.raos.fin.repository.FinancialTransactionRepository;

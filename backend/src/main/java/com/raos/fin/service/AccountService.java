@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.raos.fin.domain.model.Account;
-import com.raos.fin.domain.projection.AvailableAmountProjection;
 import com.raos.fin.dto.AccountDTO;
 import com.raos.fin.dto.AvailableAmountDTO;
 import com.raos.fin.enums.TransactionStatus;
@@ -26,13 +25,10 @@ public class AccountService {
     
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
-    private final FinancialTransactionService financialTransactionService;
     
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository,
-        FinancialTransactionService financialTransactionService) {
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
-        this.financialTransactionService = financialTransactionService;
     }
     
     public List<AccountDTO> findByUserId(Long userId) {
