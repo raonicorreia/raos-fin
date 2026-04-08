@@ -3,9 +3,11 @@ server:
 
 spring:
   datasource:
-      url: ${APPSETTING_springDatasourceUrl:jdbc:sqlserver://localhost:1433;user=sa;password=raos@1234;databaseName=Raos_Fin;encrypt=true;trustServerCertificate=true}
+      url: ${APPSETTING_springDatasourceUrl:jdbc:mysql://localhost:3306/raos_fin?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+      username: ${APPSETTING_springDatasourceUsername:raos_user}
+      password: ${APPSETTING_springDatasourcePassword:raos@1234}
       maxPoolSize: 200
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
   flyway:
     enabled: true
@@ -17,7 +19,7 @@ spring:
       path: /h2-console
   
   jpa:
-    database-platform: org.hibernate.dialect.SQLServerDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
     show-sql: false

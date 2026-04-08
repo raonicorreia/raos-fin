@@ -24,7 +24,8 @@ raos-fin/
 ### Docker
 ```bash
 cd backend
-docker-compose up
+docker-compose up -d
+docker exec mysql mysql -u raos_user -praos@1234 -e "DROP DATABASE IF EXISTS raos_fin; CREATE DATABASE raos_fin;"
 ```
 
 ### Backend
